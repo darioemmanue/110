@@ -14,7 +14,6 @@ export const agregarCarritoConItems = async (req, res) => {
 	try {
 		await conn.beginTransaction();
 
-		// Insertar carrito y obtener id
 		const [carritoResult] = await conn.query(
 			"INSERT INTO carrito (usuario_id, fecha) VALUES (?, NOW())",
 			[usuario_id]
@@ -22,7 +21,6 @@ export const agregarCarritoConItems = async (req, res) => {
 
 		const carritoId = carritoResult.insertId;
 
-		// Insertar items
 		const itemsValues = items.map((item) => [
 			carritoId,
 			item.producto_id,

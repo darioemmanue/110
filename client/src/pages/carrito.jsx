@@ -1,4 +1,5 @@
 import { useCarrito } from "../context/carritoContext";
+import { usePedidos } from "../context/pedidoContext";
 import { FiPlus, FiMinus, FiTrash2 } from "react-icons/fi";
 import { useState } from "react";
 
@@ -13,6 +14,8 @@ export default function CarritoLista({ usuario_id = 1 }) {
 		guardarCarritoEnBD,
 	} = useCarrito();
 
+	const { crearPedido } = usePedidos();
+
 	const [guardando, setGuardando] = useState(false);
 	const [mensaje, setMensaje] = useState("");
 
@@ -21,12 +24,19 @@ export default function CarritoLista({ usuario_id = 1 }) {
 			setGuardando(true);
 			setMensaje("");
 
+			// Guardar carrito en la BD y obtener carrito_id
 			const respuesta = await guardarCarritoEnBD(usuario_id);
+			const carrito_id = respuesta.carrito_id;
 
-			setMensaje(
-				`✅ Compra realizada. ID del carrito: ${respuesta.carrito_id}`
-			);
+			// Crear pedido con carrito_id y usuario_id
+			await crearPedido(carrito_id, usuario_id);
+
+			// Limpiar carrito local
+			limpiarCarrito();
+
+			setMensaje(`✅ Compra finalizada. Pedido confirmado con éxito.`);
 		} catch (error) {
+			console.error(error);
 			setMensaje("❌ Error al procesar la compra.");
 		} finally {
 			setGuardando(false);

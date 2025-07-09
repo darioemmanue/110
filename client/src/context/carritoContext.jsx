@@ -60,9 +60,10 @@ export function CarritoProvider({ children }) {
 			const respuesta = await agregarCarritoConItems(datos);
 			console.log("Carrito guardado en BD:", respuesta);
 
-			limpiarCarrito();
+			// NO limpiar aquí para evitar borrar antes de confirmar pedido
+			// limpiarCarrito();
 
-			return respuesta;
+			return respuesta; // { carrito_id, items }
 		} catch (error) {
 			console.error("Error al guardar carrito en BD:", error);
 			throw error;

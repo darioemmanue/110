@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getProductosRequest } from "../api/productos.api"; // Asegúrate de que este path sea correcto
+import { HiShoppingCart } from "react-icons/hi"; // Asegúrate de instalar react-icons si no lo has hecho
 import CardProductos from "../components/cardProducto";
 
 import { Link } from "react-router-dom";
@@ -49,6 +50,25 @@ export default function Productos() {
 					</div>
 				)}
 			</div>
+			<a
+				href="/carrito"
+				className="
+					fixed bottom-4 right-4
+					bg-gradient-to-r from-blue-400 to-blue-800
+					text-white p-3 rounded-full shadow-lg
+					flex items-center space-x-2
+					z-50
+					cursor-pointer
+					select-none
+					no-underline
+
+					transform transition-transform duration-300
+					hover:scale-110
+				"
+				aria-label="Ir al carrito">
+				<HiShoppingCart size={24} />
+				<span className="font-semibold">Carrito</span>
+			</a>
 		</>
 	);
 }

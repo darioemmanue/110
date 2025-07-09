@@ -1,6 +1,5 @@
 import pool from "../server/db.js";
 
-// Obtener todos los productos o filtrar por nombre
 export const getProductos = async (req, res) => {
 	const { nombre = "" } = req.query;
 
@@ -8,16 +7,13 @@ export const getProductos = async (req, res) => {
 		let query = "SELECT * FROM productos WHERE 1=1";
 		const params = [];
 
-		// Si se proporciona un nombre, aplica filtro
 		if (nombre) {
 			query += " AND nombre LIKE ?";
 			params.push(`%${nombre}%`);
 		}
 
-		// Ejecuta la consulta
 		const [result] = await pool.query(query, params);
 
-		// Devuelve los productos encontrados
 		res.json(result);
 	} catch (error) {
 		console.error("Error al obtener productos:", error);
@@ -25,7 +21,6 @@ export const getProductos = async (req, res) => {
 	}
 };
 
-// Obtener un producto por su ID
 export const getProducto = async (req, res) => {
 	const { id } = req.params;
 

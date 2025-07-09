@@ -1,8 +1,8 @@
-import express from "express";
+import { Router } from "express";
 import { agregarCarritoConItems } from "../controllers/carrito.controllers.js";
 
-const router = express.Router();
+const router = Router();
 
-router.post("/carrito", agregarCarritoConItems);
+router.post("/", agregarCarritoConItems);
 
 export default router;
